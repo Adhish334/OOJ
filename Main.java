@@ -1,58 +1,71 @@
 import CIE.Internals;
 import SEE.External;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        int n = 3;  // Assuming 3 students for demonstration
+        Scanner scanner = new Scanner(System.in);
 
-        // Creating objects for Internals and External classes
-        Internals[] internalsArray = new Internals[n];
-        External[] externalArray = new External[n];
+        System.out.print("Enter the number of students: ");
+        int n = scanner.nextInt();
 
-        // Initializing data for demonstration
+        Internals[] cieStudents = new Internals[n];
+        External[] seeStudents = new External[n];
         for (int i = 0; i < n; i++) {
-            internalsArray[i] = new Internals();
-            internalsArray[i].usn = "USN" + (i + 1);
-            internalsArray[i].name = "Student" + (i + 1);
-            internalsArray[i].sem = 5;
-            // Assigning some random internal marks for demonstration
-            for (int j = 0; j < 5; j++) {
-                internalsArray[i].internalMarks[j] = 40 + i * 5 + j;
-            }
+            cieStudents[i] = new Internals();
+            System.out.println("Enter details for CIE of Student " + (i + 1) + ":");
+            System.out.print("USN: ");
+            cieStudents[i].usn = scanner.next();
+            System.out.print("Name: ");
+            cieStudents[i].name = scanner.next();
+            System.out.print("Semester: ");
+            cieStudents[i].sem = scanner.nextInt();
 
-            externalArray[i] = new External();
-            externalArray[i].usn = "USN" + (i + 1);
-            externalArray[i].name = "Student" + (i + 1);
-            externalArray[i].sem = 5;
-            // Assigning some random SEE marks for demonstration
+            System.out.println("Enter Internal Marks for 5 courses:");
             for (int j = 0; j < 5; j++) {
-                externalArray[i].seeMarks[j] = 50 + i * 5 + j;
+                System.out.print("Course " + (j + 1) + ": ");
+                cieStudents[i].internalMarks[j] = scanner.nextInt();
             }
         }
 
-        // Displaying final marks
-        System.out.println("Final Marks of Students:");
+        // Input SEE marks
+        for (int i = 0; i < n; i++) {
+            seeStudents[i] = new External();
+            System.out.println("Enter details for SEE of Student " + (i + 1) + ":");
+            System.out.print("USN: ");
+            seeStudents[i].usn = scanner.next();
+            System.out.print("Name: ");
+            seeStudents[i].name = scanner.next();
+            System.out.print("Semester: ");
+            seeStudents[i].sem = scanner.nextInt();
+
+            System.out.println("Enter External Marks for 5 courses:");
+            for (int j = 0; j < 5; j++) {
+                System.out.print("Course " + (j + 1) + ": ");
+                seeStudents[i].seeMarks[j] = scanner.nextInt();
+            }
+        }
+
+        // Display final marks
+        System.out.println("\nFinal Marks of Students:");
         for (int i = 0; i < n; i++) {
             System.out.println("Student " + (i + 1) + ":");
-            System.out.println("USN: " + internalsArray[i].usn);
-            System.out.println("Name: " + internalsArray[i].name);
-            System.out.println("Semester: " + internalsArray[i].sem);
-            System.out.println("Internal Marks: " + arrayToString(internalsArray[i].internalMarks));
-            System.out.println("SEE Marks: " + arrayToString(externalArray[i].seeMarks));
+            System.out.println("USN: " + cieStudents[i].usn);
+            System.out.println("Name: " + cieStudents[i].name);
+            System.out.println("Semester: " + cieStudents[i].sem);
+
+            System.out.println("CIE Marks:");
+            for (int j = 0; j < 5; j++) {
+                System.out.println("Course " + (j + 1) + ": " + cieStudents[i].internalMarks[j]);
+            }
+
+            System.out.println("SEE Marks:");
+            for (int j = 0; j < 5; j++) {
+                System.out.println("Course " + (j + 1) + ": " + seeStudents[i].seeMarks[j]);
+            }
+
             System.out.println();
         }
-    }
-
-    // Helper method to convert an array to string for printing
-    private static String arrayToString(int[] array) {
-        StringBuilder result = new StringBuilder("[");
-        for (int i = 0; i < array.length; i++) {
-            result.append(array[i]);
-            if (i < array.length - 1) {
-                result.append(", ");
-            }
-        }
-        result.append("]");
-        return result.toString();
+        scanner.close();
     }
 }
